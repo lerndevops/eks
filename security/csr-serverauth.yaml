@@ -1,0 +1,26 @@
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: myserver
+spec:
+  request: $base_64
+  signerName: beta.eks.amazonaws.com/app-serving
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+
+# openssl genrsa -out myserver.key 2048
+# openssl req -new -key myserver.key -out myserver.csr -subj "/CN=myserver.default.svc"
+# base_64=$(cat myserver.csr | base64 -w 0 | tr -d "\n")
+# kubectl apply -f mycsr.yaml
+# kubectl certificate approve myserver
+# kubectl get csr myserver
+# kubectl get csr myserver -o jsonpath='{.status.certificate}'| base64 -d > myserver.crt
+
+# get cluter CA 
+aws eks describe-cluster \
+        --region=us-east-2 \
+        --name=test \
+        --output=text \
+        --query 'cluster.{certificateAuthorityData: certificateAuthority.data}'

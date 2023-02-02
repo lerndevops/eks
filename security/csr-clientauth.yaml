@@ -1,0 +1,29 @@
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: naresh
+spec:
+  request: $base_64
+  signerName: beta.eks.amazonaws.com/app-serving
+  groups:
+    - system:authenticated
+  usages:
+    - keyEncipherment
+    - client auth
+    - dataEncipherment
+    - serverAuth
+
+# openssl genrsa -out naresh.key 2048
+# openssl req -new -key naresh.key -out naresh.csr -subj "/CN=naresh"
+# base_64=$(cat naresh.csr | base64 -w 0 | tr -d "\n")
+# kubectl apply -f naresh.yaml
+# kubectl certificate approve naresh
+# kubectl get csr naresh
+# kubectl get csr naresh -o jsonpath='{.status.certificate}'| base64 -d > naresh.crt
+
+# get cluter CA 
+aws eks describe-cluster \
+        --region=us-east-2 \
+        --name=test \
+        --output=text \
+        --query 'cluster.{certificateAuthorityData: certificateAuthority.data}'
