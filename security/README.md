@@ -62,12 +62,18 @@ users:
       - us-east-2
       command: aws
 ```
+
 > We can see that the user authentication is different from the usual authentication methods (Bearer token, username and password, etc.). This exec section is specifying a command to run and arguments to use for authenticating the user. The command that is going to be run is:
 
 > `aws --region us-east-2 eks get-token --cluster-name test`
 
+> **with the above command, AWS EKS responds with an access token as below. This access token will be added to the HTTP requests that Kubectl sends to the API server**
+
 ```
 root@myvm:~# aws --region us-east-2 eks get-token --cluster-name test
 
-{"kind": "ExecCredential", "apiVersion": "client.authentication.k8s.io/v1beta1", "spec": {}, "status": {"expirationTimestamp": "2023-02-02T18:07:21Z", "token": "k8s-aws-v1.aHR0cHM6Ly9zdHMudXMtZWFzdC0yLmFtYXpvbmF3cy5jb20vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUmWC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBWjUyUDRRVTZOT0pQNk0yRiUyRjIwMjMwMjAyJTJGdXMtZWFzdC0yJTJGc3RzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzAyMDJUMTc1MzIxWiZYLUFtei1FeHBpcmVzPTYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCUzQngtazhzLWF3cy1pZCZYLUFtei1TaWduYXR1cmU9ZTliOGRlMTlhN2IwNjczNWNhNmUyMGEyZDIzNWMzMDE2MzNmMjg4YmQ3N2ExYTdiNzJjMWZlMmU3NTA3OTUzMw"}}
+{"kind": "ExecCredential", "apiVersion": "client.authentication.k8s.io/v1beta1", "spec": {}, "status": {"expirationTimestamp": "2023-02-02T18:07:21Z", "token": "k8s-awsv1.aHR0cHM6Ly9zdHMudXMtZWFzdC0yLmFtYXpvbmF3cy5jb20vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUmWC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBWjUyUDRRVTZOT0pQNk0yRiUyRjIwMjMwMjAyJTJGdXMtZWFzdC0yJTJGc3RzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzAyMDJUMTc1MzIxWiZYLUFtei1FeHBpcmVzPTYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCUzQngtazhzLWF3cy1pZCZYLUFtei1TaWduYXR1cmU9ZTliOGRlMTlhN2IwNjczNWNhNmUyMGEyZDIzNWMzMDE2MzNmMjg4YmQ3N2ExYTdiNzJjMWZlMmU3NTA3OTUzMw"}}
 ```
+
+
+## Token Exploration 
