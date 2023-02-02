@@ -1,4 +1,4 @@
-## Security With EKS
+## Default Security With EKS Cluster Setup
 
 ## EKS Authentication
 > As previously mentioned, EKS is AWS’s managed Kubernetes service. As such, it takes the responsibility of deploying and managing the Kubernetes cluster off of you. In addition, EKS is integrated with other AWS services, among them is the Identity and Access Management (IAM), So, EKS uses IAM for cluster authentication, but the authorization still happens on native Kubernetes using RBAC (Role Based Access Control).
